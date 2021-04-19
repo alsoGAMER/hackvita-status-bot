@@ -1,0 +1,9 @@
+pyrogram
+tgcrypto
+wheel
+asyncio
+mysqlclient
+plate
+httpx
+httpx[http2]
+httpx[brotli]
