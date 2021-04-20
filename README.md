@@ -15,4 +15,4 @@
 ### If you want to contribute by improving the Bot, the source code, or anything else, please open a Pull Request, I'll check it out ASAP.
 
 ## License
-### This project is licensed under the GNU Public License Version 3. <br />Further information is available [here](https://www.gnu.org/licenses/).
+### This project is licensed under the GNU General Public License Version 3. <br />Further information is available [here](https://www.gnu.org/licenses/).
