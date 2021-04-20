@@ -6,7 +6,6 @@
   "flood_user_cleared": "♻️ Antiflood table for <code>{user}</code> cleaned up",
   "too_fast": "✋ Calm down! Try again later",
   "support_button": "💭 Support Chat",
-  "start_downloading_button": "⬇️ Start downloading ⬇️",
   "back_button": "🔙 Back",
   "about_button": "ℹ About",
   "marked_busy": "🎲 You're now busy, resend /busy to reset this state",
