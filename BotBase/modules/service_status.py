@@ -15,15 +15,23 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
+import logging
+import time
 
 import httpx
+
+timestamp = int(time.time() * 1000)
 
 
 async def get_website_status():
     async with httpx.AsyncClient() as client:
-        r = await client.get(
-            "https://status.hackvita.eu/api/getMonitorList/MW0n9u5897?page=1&_=1618689069664"
-        )
+        try:
+            r = await client.get(
+                f"https://status.hackvita.eu/api/getMonitorList/MW0n9u5897?page=1&_={timestamp}"
+            )
+        except httpx.HTTPError as e:
+            logging.error(f"An error occurred while contacting {e.request.url}")
+            return False
     if r.json()["status"] == "ok":
         x = None
         for monitor in r.json()["psp"]["monitors"]:
@@ -37,11 +45,93 @@ async def get_website_status():
     return False
 
 
+async def get_30d_website_history_ratio():
+    async with httpx.AsyncClient() as client:
+        try:
+            r = await client.get(
+                f"https://status.hackvita.eu/api/getMonitorList/MW0n9u5897?page=1&_={timestamp}"
+            )
+        except httpx.HTTPError as e:
+            logging.error(f"An error occurred while contacting {e.request.url}")
+            return "N/A"
+    if r.json()["status"] == "ok":
+        x = None
+        for monitor in r.json()["psp"]["monitors"]:
+            if monitor["monitorId"] == 787864216:
+                x = monitor
+                break
+        return x["30dRatio"]["ratio"]
+
+
+async def get_90d_website_history_ratio():
+    async with httpx.AsyncClient() as client:
+        try:
+            r = await client.get(
+                f"https://status.hackvita.eu/api/getMonitorList/MW0n9u5897?page=1&_={timestamp}"
+            )
+        except httpx.HTTPError as e:
+            logging.error(f"An error occurred while contacting {e.request.url}")
+            return "N/A"
+    if r.json()["status"] == "ok":
+        x = None
+        for monitor in r.json()["psp"]["monitors"]:
+            if monitor["monitorId"] == 787864216:
+                x = monitor
+                break
+        return x["90dRatio"]["ratio"]
+
+
+async def get_30d_website_history_label():
+    async with httpx.AsyncClient() as client:
+        try:
+            r = await client.get(
+                f"https://status.hackvita.eu/api/getMonitorList/MW0n9u5897?page=1&_={timestamp}"
+            )
+        except httpx.HTTPError as e:
+            logging.error(f"An error occurred while contacting {e.request.url}")
+            return False
+    if r.json()["status"] == "ok":
+        x = None
+        for monitor in r.json()["psp"]["monitors"]:
+            if monitor["monitorId"] == 787864216:
+                x = monitor
+                break
+        if not x["30dRatio"]["label"] == "success":
+            return False
+        else:
+            return True
+
+
+async def get_90d_website_history_label():
+    async with httpx.AsyncClient() as client:
+        try:
+            r = await client.get(
+                f"https://status.hackvita.eu/api/getMonitorList/MW0n9u5897?page=1&_={timestamp}"
+            )
+        except httpx.HTTPError as e:
+            logging.error(f"An error occurred while contacting {e.request.url}")
+            return False
+    if r.json()["status"] == "ok":
+        x = None
+        for monitor in r.json()["psp"]["monitors"]:
+            if monitor["monitorId"] == 787864216:
+                x = monitor
+                break
+        if not x["90dRatio"]["label"] == "success":
+            return False
+        else:
+            return True
+
+
 async def get_api_status():
     async with httpx.AsyncClient() as client:
-        r = await client.get(
-            "https://status.hackvita.eu/api/getMonitorList/MW0n9u5897?page=1&_=1618689069664"
-        )
+        try:
+            r = await client.get(
+                f"https://status.hackvita.eu/api/getMonitorList/MW0n9u5897?page=1&_={timestamp}"
+            )
+        except httpx.HTTPError as e:
+            logging.error(f"An error occurred while contacting {e.request.url}")
+            return False
     if r.json()["status"] == "ok":
         x = None
         for monitor in r.json()["psp"]["monitors"]:
@@ -55,11 +145,93 @@ async def get_api_status():
     return False
 
 
+async def get_30d_api_history_ratio():
+    async with httpx.AsyncClient() as client:
+        try:
+            r = await client.get(
+                f"https://status.hackvita.eu/api/getMonitorList/MW0n9u5897?page=1&_={timestamp}"
+            )
+        except httpx.HTTPError as e:
+            logging.error(f"An error occurred while contacting {e.request.url}")
+            return "N/A"
+    if r.json()["status"] == "ok":
+        x = None
+        for monitor in r.json()["psp"]["monitors"]:
+            if monitor["monitorId"] == 787864217:
+                x = monitor
+                break
+        return x["30dRatio"]["ratio"]
+
+
+async def get_90d_api_history_ratio():
+    async with httpx.AsyncClient() as client:
+        try:
+            r = await client.get(
+                f"https://status.hackvita.eu/api/getMonitorList/MW0n9u5897?page=1&_={timestamp}"
+            )
+        except httpx.HTTPError as e:
+            logging.error(f"An error occurred while contacting {e.request.url}")
+            return "N/A"
+    if r.json()["status"] == "ok":
+        x = None
+        for monitor in r.json()["psp"]["monitors"]:
+            if monitor["monitorId"] == 787864217:
+                x = monitor
+                break
+        return x["90dRatio"]["ratio"]
+
+
+async def get_30d_api_history_label():
+    async with httpx.AsyncClient() as client:
+        try:
+            r = await client.get(
+                f"https://status.hackvita.eu/api/getMonitorList/MW0n9u5897?page=1&_={timestamp}"
+            )
+        except httpx.HTTPError as e:
+            logging.error(f"An error occurred while contacting {e.request.url}")
+            return False
+    if r.json()["status"] == "ok":
+        x = None
+        for monitor in r.json()["psp"]["monitors"]:
+            if monitor["monitorId"] == 787864217:
+                x = monitor
+                break
+        if not x["30dRatio"]["label"] == "success":
+            return False
+        else:
+            return True
+
+
+async def get_90d_api_history_label():
+    async with httpx.AsyncClient() as client:
+        try:
+            r = await client.get(
+                f"https://status.hackvita.eu/api/getMonitorList/MW0n9u5897?page=1&_={timestamp}"
+            )
+        except httpx.HTTPError as e:
+            logging.error(f"An error occurred while contacting {e.request.url}")
+            return False
+    if r.json()["status"] == "ok":
+        x = None
+        for monitor in r.json()["psp"]["monitors"]:
+            if monitor["monitorId"] == 787864217:
+                x = monitor
+                break
+        if not x["90dRatio"]["label"] == "success":
+            return False
+        else:
+            return True
+
+
 async def get_api_docs_status():
     async with httpx.AsyncClient() as client:
-        r = await client.get(
-            "https://status.hackvita.eu/api/getMonitorList/MW0n9u5897?page=1&_=1618689069664"
-        )
+        try:
+            r = await client.get(
+                f"https://status.hackvita.eu/api/getMonitorList/MW0n9u5897?page=1&_={timestamp}"
+            )
+        except httpx.HTTPError as e:
+            logging.error(f"An error occurred while contacting {e.request.url}")
+            return False
     if r.json()["status"] == "ok":
         x = None
         for monitor in r.json()["psp"]["monitors"]:
@@ -73,11 +245,93 @@ async def get_api_docs_status():
     return False
 
 
+async def get_30d_api_docs_history_ratio():
+    async with httpx.AsyncClient() as client:
+        try:
+            r = await client.get(
+                f"https://status.hackvita.eu/api/getMonitorList/MW0n9u5897?page=1&_={timestamp}"
+            )
+        except httpx.HTTPError as e:
+            logging.error(f"An error occurred while contacting {e.request.url}")
+            return "N/A"
+    if r.json()["status"] == "ok":
+        x = None
+        for monitor in r.json()["psp"]["monitors"]:
+            if monitor["monitorId"] == 787864218:
+                x = monitor
+                break
+        return x["30dRatio"]["ratio"]
+
+
+async def get_90d_api_docs_history_ratio():
+    async with httpx.AsyncClient() as client:
+        try:
+            r = await client.get(
+                f"https://status.hackvita.eu/api/getMonitorList/MW0n9u5897?page=1&_={timestamp}"
+            )
+        except httpx.HTTPError as e:
+            logging.error(f"An error occurred while contacting {e.request.url}")
+            return "N/A"
+    if r.json()["status"] == "ok":
+        x = None
+        for monitor in r.json()["psp"]["monitors"]:
+            if monitor["monitorId"] == 787864218:
+                x = monitor
+                break
+        return x["90dRatio"]["ratio"]
+
+
+async def get_30d_api_docs_history_label():
+    async with httpx.AsyncClient() as client:
+        try:
+            r = await client.get(
+                f"https://status.hackvita.eu/api/getMonitorList/MW0n9u5897?page=1&_={timestamp}"
+            )
+        except httpx.HTTPError as e:
+            logging.error(f"An error occurred while contacting {e.request.url}")
+            return False
+    if r.json()["status"] == "ok":
+        x = None
+        for monitor in r.json()["psp"]["monitors"]:
+            if monitor["monitorId"] == 787864218:
+                x = monitor
+                break
+        if not x["30dRatio"]["label"] == "success":
+            return False
+        else:
+            return True
+
+
+async def get_90d_api_docs_history_label():
+    async with httpx.AsyncClient() as client:
+        try:
+            r = await client.get(
+                f"https://status.hackvita.eu/api/getMonitorList/MW0n9u5897?page=1&_={timestamp}"
+            )
+        except httpx.HTTPError as e:
+            logging.error(f"An error occurred while contacting {e.request.url}")
+            return False
+    if r.json()["status"] == "ok":
+        x = None
+        for monitor in r.json()["psp"]["monitors"]:
+            if monitor["monitorId"] == 787864218:
+                x = monitor
+                break
+        if not x["90dRatio"]["label"] == "success":
+            return False
+        else:
+            return True
+
+
 async def get_internal_api_status():
     async with httpx.AsyncClient() as client:
-        r = await client.get(
-            "https://status.hackvita.eu/api/getMonitorList/MW0n9u5897?page=1&_=1618689069664"
-        )
+        try:
+            r = await client.get(
+                f"https://status.hackvita.eu/api/getMonitorList/MW0n9u5897?page=1&_={timestamp}"
+            )
+        except httpx.HTTPError as e:
+            logging.error(f"An error occurred while contacting {e.request.url}")
+            return False
     if r.json()["status"] == "ok":
         x = None
         for monitor in r.json()["psp"]["monitors"]:
@@ -89,3 +343,81 @@ async def get_internal_api_status():
         else:
             return False
     return False
+
+
+async def get_30d_internal_api_history_ratio():
+    async with httpx.AsyncClient() as client:
+        try:
+            r = await client.get(
+                f"https://status.hackvita.eu/api/getMonitorList/MW0n9u5897?page=1&_={timestamp}"
+            )
+        except httpx.HTTPError as e:
+            logging.error(f"An error occurred while contacting {e.request.url}")
+            return "N/A"
+    if r.json()["status"] == "ok":
+        x = None
+        for monitor in r.json()["psp"]["monitors"]:
+            if monitor["monitorId"] == 787864219:
+                x = monitor
+                break
+        return x["30dRatio"]["ratio"]
+
+
+async def get_90d_internal_api_history_ratio():
+    async with httpx.AsyncClient() as client:
+        try:
+            r = await client.get(
+                f"https://status.hackvita.eu/api/getMonitorList/MW0n9u5897?page=1&_={timestamp}"
+            )
+        except httpx.HTTPError as e:
+            logging.error(f"An error occurred while contacting {e.request.url}")
+            return "N/A"
+    if r.json()["status"] == "ok":
+        x = None
+        for monitor in r.json()["psp"]["monitors"]:
+            if monitor["monitorId"] == 787864219:
+                x = monitor
+                break
+        return x["90dRatio"]["ratio"]
+
+
+async def get_30d_internal_api_history_label():
+    async with httpx.AsyncClient() as client:
+        try:
+            r = await client.get(
+                f"https://status.hackvita.eu/api/getMonitorList/MW0n9u5897?page=1&_={timestamp}"
+            )
+        except httpx.HTTPError as e:
+            logging.error(f"An error occurred while contacting {e.request.url}")
+            return False
+    if r.json()["status"] == "ok":
+        x = None
+        for monitor in r.json()["psp"]["monitors"]:
+            if monitor["monitorId"] == 787864219:
+                x = monitor
+                break
+        if not x["30dRatio"]["label"] == "success":
+            return False
+        else:
+            return True
+
+
+async def get_90d_internal_api_history_label():
+    async with httpx.AsyncClient() as client:
+        try:
+            r = await client.get(
+                f"https://status.hackvita.eu/api/getMonitorList/MW0n9u5897?page=1&_={timestamp}"
+            )
+        except httpx.HTTPError as e:
+            logging.error(f"An error occurred while contacting {e.request.url}")
+            return False
+    if r.json()["status"] == "ok":
+        x = None
+        for monitor in r.json()["psp"]["monitors"]:
+            if monitor["monitorId"] == 787864219:
+                x = monitor
+                break
+        if not x["90dRatio"]["label"] == "success":
+            return False
+        else:
+            return True

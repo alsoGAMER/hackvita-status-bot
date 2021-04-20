@@ -17,7 +17,6 @@
 """
 
 import itertools
-import logging
 
 from pyrogram import Client, filters
 from pyrogram.types import (
@@ -31,10 +30,11 @@ from BotBase.config import (
     ADMINS,
     BUTTONS,
     CACHE,
-    CREDITS,
     GREET,
     NAME,
-    VERSION,
+    PY_VERSION,
+    BOT_VERSION,
+    BOTBASE_VERSION,
     bot,
     plate,
 )
@@ -72,7 +72,8 @@ async def start_handler(_, update):
     if GREET:
         if isinstance(update, Message):
             await update_wrapper.reply(
-                text=GREET.format(
+                text=plate(
+                    "greet",
                     mention=f"[{name}](tg://user?id={update.from_user.id})",
                     id=update.from_user.id,
                     username=update.from_user.username,
@@ -107,7 +108,8 @@ async def start_handler(_, update):
                     ),
 
             await update_wrapper.edit_message_text(
-                text=GREET.format(
+                text=plate(
+                    "greet",
                     mention=f"[{name}](tg://user?id={update.from_user.id})",
                     id=update.from_user.id,
                     username=update.from_user.username,
@@ -138,7 +140,12 @@ async def cb_start_handler(_, message):
 async def bot_about_handler(_, query):
     cb_wrapper = MethodWrapper(query)
     await cb_wrapper.edit_message_text(
-        text=CREDITS.format(VERSION=VERSION),
+        text=plate(
+            "credits",
+            python_version=PY_VERSION,
+            botbase_version=BOTBASE_VERSION,
+            bot_version=BOT_VERSION,
+        ),
         disable_web_page_preview=True,
         reply_markup=InlineKeyboardMarkup(
             [[InlineKeyboardButton(plate("back_button"), "back_start")]]
@@ -162,10 +169,35 @@ async def bot_disclaimer_handler(_, query):
 
 @Client.on_callback_query(filters.regex("services_status_history") & ~BANNED_USERS)
 async def services_status_history_handler(_, query):
-    # Placeholder
     cb_wrapper = MethodWrapper(query)
     await cb_wrapper.edit_message_text(
-        text=plate("services_status_history_text"),
+        text=plate(
+            "services_status_history_text",
+            website_30d_avg=await get_30d_website_history_ratio(),
+            website_30d_avg_symbol="✅"
+            if await get_30d_website_history_label()
+            else "⚠️",
+            api_30d_avg=await get_30d_api_history_ratio(),
+            api_30d_avg_symbol="✅" if await get_30d_api_history_label() else "⚠️",
+            docs_30d_avg=await get_30d_api_docs_history_ratio(),
+            docs_30d_avg_symbol="✅" if await get_30d_api_docs_history_label() else "⚠️",
+            internal_api_30d_avg=await get_30d_internal_api_history_ratio(),
+            internal_api_30d_avg_symbol="✅"
+            if await get_30d_internal_api_history_label()
+            else "⚠️",
+            website_90d_avg=await get_90d_website_history_ratio(),
+            website_90d_avg_symbol="✅"
+            if await get_90d_website_history_label()
+            else "⚠️",
+            api_90d_avg=await get_90d_api_history_ratio(),
+            api_90d_avg_symbol="✅" if await get_90d_api_history_label() else "⚠️",
+            docs_90d_avg=await get_90d_api_docs_history_ratio(),
+            docs_90d_avg_symbol="✅" if await get_90d_api_docs_history_label() else "⚠️",
+            internal_api_90d_avg=await get_90d_internal_api_history_ratio(),
+            internal_api_90d_avg_symbol="✅"
+            if await get_90d_internal_api_history_label()
+            else "⚠️",
+        ),
         disable_web_page_preview=True,
         reply_markup=InlineKeyboardMarkup(
             [[InlineKeyboardButton(plate("back_button"), "back_start")]]

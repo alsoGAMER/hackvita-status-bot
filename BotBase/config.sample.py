@@ -54,16 +54,9 @@ CACHE = defaultdict(lambda: ["none", 0])
 # Global cache. DO NOT TOUCH IT, really just don't
 NAME = "tg://user?id={}"
 
-VERSION = "ALPHA"
-CREDITS = (
-    f"‍💻 <b>Bot developed by</b> @alsoGAMER in <b>Python{platform.python_version()}</b> and <b>BotBase 2.1.1</b>"
-    f"\n⚙️ <b>Version</b>: <code>{VERSION}</code>\n\n❤️ <b>Special thanks</b> to:\n• <a href='tg://user?id=723935489'>Giovanni</a>"
-    f" and the whole <a href='https://hackvita.eu'>HackVita Team</a> for the fantastic job done with this Generator"
-    f" <i>(and also for letting me do this Bot).</i>\n• <a href='tg://user?id=522851039'>Lorena</a> for helping me out with"
-    f" all the Bot messages and styling.\n• <a href='tg://user?id=239556789'>Davide. φ</a> for helping me out troubleshooting"
-    f" various Bot functions.\n• <a href='tg://user?id=829078598'>Fede</a> for all the moral support given to me in the development phase."
-)
-# These will be shown in the 'Credits' section
+PY_VERSION = platform.python_version()
+BOT_VERSION = "ALPHA"
+BOTBASE_VERSION = "2.1.1"
 # endregion
 
 # region Telegram client configuration
@@ -116,15 +109,8 @@ LOGGING_LEVEL = 30
 # region Start module
 # P.S.: {mention} in the GREET message will be replaced with a mention to the user, same applies for {id} and {username}
 
-GREET = (
-    "👋 <b>Hi</b> {mention} and welcome to <b>HackVita Status</b>.\n🧠 <i>This unofficial Bot will show you the "
-    "current and past* status for all the</i> HackVita.eu <i>services</i>.\n\n⚜️ <b>Services Status</b>:"
-    "\n🌐 • Website: <code>{website_status}</code>\n🐝 • APIs: <code>{api_status}</code>"
-    "\n✏️ • API Docs: <code>{api_docs_status}</code>\n🔑 • Internal APIs: <code>{internal_api_status}</code>"
-    "\n\n* <i>This feature isn't implemented yet</i>. 👀"
-)
-# The message that will be sent to the users as a reply to the /start command. If this string is empty the bot will
-# not reply.
+GREET = True
+# Set this to False if you don't want the Bot to reply to /start.
 # endregion
 
 # region Database configuration
