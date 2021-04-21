@@ -133,8 +133,8 @@ async def count_users(_, message):
         logging.warning(
             f"{ADMINS[message.from_user.id]} [{message.from_user.id}] sent /count"
         )
-        count = len(get_users())
-        await wrapper.send_message(message.chat.id, plate("users_count", count=count))
+        users_count = len(get_users())
+        await wrapper.send_message(message.chat.id, plate("users_count", users_count=users_count))
 
 
 @Client.on_message(
@@ -152,10 +152,10 @@ async def global_message(_, message):
         )
 
         missed = 0
-        count = 0
+        attempts = 0
 
         for tg_id in itertools.chain(*get_users()):
-            count += 1
+            attempts += 1
             result = await wrapper.send_message(tg_id, msg)
 
             if isinstance(result, Exception):
@@ -165,12 +165,12 @@ async def global_message(_, message):
                 missed += 1
 
         logging.warning(
-            f"{count - missed}/{count} global messages were successfully delivered"
+            f"{attempts - missed}/{attempts} global messages were successfully delivered"
         )
         await wrapper.send_message(
             message.chat.id,
             plate(
-                "global_message_stats", count=count, success=(count - missed), msg=msg
+                "global_message_stats", attempts=attempts, success=(attempts - missed), msg=msg
             ),
         )
     else:
