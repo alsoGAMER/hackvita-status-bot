@@ -19,10 +19,15 @@ import logging
 import time
 
 import httpx
+from cachetools import cached, TTLCache
+
+from BotBase.methods.cacheable import cacheable
 
 timestamp = int(time.time() * 1000)
 
 
+@cached(cache=TTLCache(maxsize=1, ttl=300))
+@cacheable
 async def get_website_status():
     async with httpx.AsyncClient() as client:
         try:
@@ -30,7 +35,7 @@ async def get_website_status():
                 f"https://status.hackvita.eu/api/getMonitorList/MW0n9u5897?page=1&_={timestamp}"
             )
         except httpx.HTTPError as e:
-            logging.error(f"An error occurred while contacting {e.request.url}")
+            logging.error(f"An error occurred while contacting {e.request.url}: {e}")
             return False
     if r.json()["status"] == "ok":
         x = None
@@ -45,6 +50,8 @@ async def get_website_status():
     return False
 
 
+@cached(cache=TTLCache(maxsize=1, ttl=300))
+@cacheable
 async def get_30d_website_history_ratio():
     async with httpx.AsyncClient() as client:
         try:
@@ -52,7 +59,7 @@ async def get_30d_website_history_ratio():
                 f"https://status.hackvita.eu/api/getMonitorList/MW0n9u5897?page=1&_={timestamp}"
             )
         except httpx.HTTPError as e:
-            logging.error(f"An error occurred while contacting {e.request.url}")
+            logging.error(f"An error occurred while contacting {e.request.url}: {e}")
             return "N/A"
     if r.json()["status"] == "ok":
         x = None
@@ -63,6 +70,8 @@ async def get_30d_website_history_ratio():
         return x["30dRatio"]["ratio"]
 
 
+@cached(cache=TTLCache(maxsize=1, ttl=300))
+@cacheable
 async def get_90d_website_history_ratio():
     async with httpx.AsyncClient() as client:
         try:
@@ -70,7 +79,7 @@ async def get_90d_website_history_ratio():
                 f"https://status.hackvita.eu/api/getMonitorList/MW0n9u5897?page=1&_={timestamp}"
             )
         except httpx.HTTPError as e:
-            logging.error(f"An error occurred while contacting {e.request.url}")
+            logging.error(f"An error occurred while contacting {e.request.url}: {e}")
             return "N/A"
     if r.json()["status"] == "ok":
         x = None
@@ -81,6 +90,8 @@ async def get_90d_website_history_ratio():
         return x["90dRatio"]["ratio"]
 
 
+@cached(cache=TTLCache(maxsize=1, ttl=300))
+@cacheable
 async def get_30d_website_history_label():
     async with httpx.AsyncClient() as client:
         try:
@@ -88,7 +99,7 @@ async def get_30d_website_history_label():
                 f"https://status.hackvita.eu/api/getMonitorList/MW0n9u5897?page=1&_={timestamp}"
             )
         except httpx.HTTPError as e:
-            logging.error(f"An error occurred while contacting {e.request.url}")
+            logging.error(f"An error occurred while contacting {e.request.url}: {e}")
             return False
     if r.json()["status"] == "ok":
         x = None
@@ -102,6 +113,8 @@ async def get_30d_website_history_label():
             return True
 
 
+@cached(cache=TTLCache(maxsize=1, ttl=300))
+@cacheable
 async def get_90d_website_history_label():
     async with httpx.AsyncClient() as client:
         try:
@@ -109,7 +122,7 @@ async def get_90d_website_history_label():
                 f"https://status.hackvita.eu/api/getMonitorList/MW0n9u5897?page=1&_={timestamp}"
             )
         except httpx.HTTPError as e:
-            logging.error(f"An error occurred while contacting {e.request.url}")
+            logging.error(f"An error occurred while contacting {e.request.url}: {e}")
             return False
     if r.json()["status"] == "ok":
         x = None
@@ -123,6 +136,8 @@ async def get_90d_website_history_label():
             return True
 
 
+@cached(cache=TTLCache(maxsize=1, ttl=300))
+@cacheable
 async def get_api_status():
     async with httpx.AsyncClient() as client:
         try:
@@ -130,7 +145,7 @@ async def get_api_status():
                 f"https://status.hackvita.eu/api/getMonitorList/MW0n9u5897?page=1&_={timestamp}"
             )
         except httpx.HTTPError as e:
-            logging.error(f"An error occurred while contacting {e.request.url}")
+            logging.error(f"An error occurred while contacting {e.request.url}: {e}")
             return False
     if r.json()["status"] == "ok":
         x = None
@@ -145,6 +160,8 @@ async def get_api_status():
     return False
 
 
+@cached(cache=TTLCache(maxsize=1, ttl=300))
+@cacheable
 async def get_30d_api_history_ratio():
     async with httpx.AsyncClient() as client:
         try:
@@ -152,7 +169,7 @@ async def get_30d_api_history_ratio():
                 f"https://status.hackvita.eu/api/getMonitorList/MW0n9u5897?page=1&_={timestamp}"
             )
         except httpx.HTTPError as e:
-            logging.error(f"An error occurred while contacting {e.request.url}")
+            logging.error(f"An error occurred while contacting {e.request.url}: {e}")
             return "N/A"
     if r.json()["status"] == "ok":
         x = None
@@ -163,6 +180,8 @@ async def get_30d_api_history_ratio():
         return x["30dRatio"]["ratio"]
 
 
+@cached(cache=TTLCache(maxsize=1, ttl=300))
+@cacheable
 async def get_90d_api_history_ratio():
     async with httpx.AsyncClient() as client:
         try:
@@ -170,7 +189,7 @@ async def get_90d_api_history_ratio():
                 f"https://status.hackvita.eu/api/getMonitorList/MW0n9u5897?page=1&_={timestamp}"
             )
         except httpx.HTTPError as e:
-            logging.error(f"An error occurred while contacting {e.request.url}")
+            logging.error(f"An error occurred while contacting {e.request.url}: {e}")
             return "N/A"
     if r.json()["status"] == "ok":
         x = None
@@ -181,6 +200,8 @@ async def get_90d_api_history_ratio():
         return x["90dRatio"]["ratio"]
 
 
+@cached(cache=TTLCache(maxsize=1, ttl=300))
+@cacheable
 async def get_30d_api_history_label():
     async with httpx.AsyncClient() as client:
         try:
@@ -188,7 +209,7 @@ async def get_30d_api_history_label():
                 f"https://status.hackvita.eu/api/getMonitorList/MW0n9u5897?page=1&_={timestamp}"
             )
         except httpx.HTTPError as e:
-            logging.error(f"An error occurred while contacting {e.request.url}")
+            logging.error(f"An error occurred while contacting {e.request.url}: {e}")
             return False
     if r.json()["status"] == "ok":
         x = None
@@ -202,6 +223,8 @@ async def get_30d_api_history_label():
             return True
 
 
+@cached(cache=TTLCache(maxsize=1, ttl=300))
+@cacheable
 async def get_90d_api_history_label():
     async with httpx.AsyncClient() as client:
         try:
@@ -209,7 +232,7 @@ async def get_90d_api_history_label():
                 f"https://status.hackvita.eu/api/getMonitorList/MW0n9u5897?page=1&_={timestamp}"
             )
         except httpx.HTTPError as e:
-            logging.error(f"An error occurred while contacting {e.request.url}")
+            logging.error(f"An error occurred while contacting {e.request.url}: {e}")
             return False
     if r.json()["status"] == "ok":
         x = None
@@ -223,6 +246,8 @@ async def get_90d_api_history_label():
             return True
 
 
+@cached(cache=TTLCache(maxsize=1, ttl=300))
+@cacheable
 async def get_api_docs_status():
     async with httpx.AsyncClient() as client:
         try:
@@ -230,7 +255,7 @@ async def get_api_docs_status():
                 f"https://status.hackvita.eu/api/getMonitorList/MW0n9u5897?page=1&_={timestamp}"
             )
         except httpx.HTTPError as e:
-            logging.error(f"An error occurred while contacting {e.request.url}")
+            logging.error(f"An error occurred while contacting {e.request.url}: {e}")
             return False
     if r.json()["status"] == "ok":
         x = None
@@ -245,6 +270,8 @@ async def get_api_docs_status():
     return False
 
 
+@cached(cache=TTLCache(maxsize=1, ttl=300))
+@cacheable
 async def get_30d_api_docs_history_ratio():
     async with httpx.AsyncClient() as client:
         try:
@@ -252,7 +279,7 @@ async def get_30d_api_docs_history_ratio():
                 f"https://status.hackvita.eu/api/getMonitorList/MW0n9u5897?page=1&_={timestamp}"
             )
         except httpx.HTTPError as e:
-            logging.error(f"An error occurred while contacting {e.request.url}")
+            logging.error(f"An error occurred while contacting {e.request.url}: {e}")
             return "N/A"
     if r.json()["status"] == "ok":
         x = None
@@ -263,6 +290,8 @@ async def get_30d_api_docs_history_ratio():
         return x["30dRatio"]["ratio"]
 
 
+@cached(cache=TTLCache(maxsize=1, ttl=300))
+@cacheable
 async def get_90d_api_docs_history_ratio():
     async with httpx.AsyncClient() as client:
         try:
@@ -270,7 +299,7 @@ async def get_90d_api_docs_history_ratio():
                 f"https://status.hackvita.eu/api/getMonitorList/MW0n9u5897?page=1&_={timestamp}"
             )
         except httpx.HTTPError as e:
-            logging.error(f"An error occurred while contacting {e.request.url}")
+            logging.error(f"An error occurred while contacting {e.request.url}: {e}")
             return "N/A"
     if r.json()["status"] == "ok":
         x = None
@@ -281,6 +310,8 @@ async def get_90d_api_docs_history_ratio():
         return x["90dRatio"]["ratio"]
 
 
+@cached(cache=TTLCache(maxsize=1, ttl=300))
+@cacheable
 async def get_30d_api_docs_history_label():
     async with httpx.AsyncClient() as client:
         try:
@@ -288,7 +319,7 @@ async def get_30d_api_docs_history_label():
                 f"https://status.hackvita.eu/api/getMonitorList/MW0n9u5897?page=1&_={timestamp}"
             )
         except httpx.HTTPError as e:
-            logging.error(f"An error occurred while contacting {e.request.url}")
+            logging.error(f"An error occurred while contacting {e.request.url}: {e}")
             return False
     if r.json()["status"] == "ok":
         x = None
@@ -302,6 +333,8 @@ async def get_30d_api_docs_history_label():
             return True
 
 
+@cached(cache=TTLCache(maxsize=1, ttl=300))
+@cacheable
 async def get_90d_api_docs_history_label():
     async with httpx.AsyncClient() as client:
         try:
@@ -309,7 +342,7 @@ async def get_90d_api_docs_history_label():
                 f"https://status.hackvita.eu/api/getMonitorList/MW0n9u5897?page=1&_={timestamp}"
             )
         except httpx.HTTPError as e:
-            logging.error(f"An error occurred while contacting {e.request.url}")
+            logging.error(f"An error occurred while contacting {e.request.url}: {e}")
             return False
     if r.json()["status"] == "ok":
         x = None
@@ -323,6 +356,8 @@ async def get_90d_api_docs_history_label():
             return True
 
 
+@cached(cache=TTLCache(maxsize=1, ttl=300))
+@cacheable
 async def get_internal_api_status():
     async with httpx.AsyncClient() as client:
         try:
@@ -330,7 +365,7 @@ async def get_internal_api_status():
                 f"https://status.hackvita.eu/api/getMonitorList/MW0n9u5897?page=1&_={timestamp}"
             )
         except httpx.HTTPError as e:
-            logging.error(f"An error occurred while contacting {e.request.url}")
+            logging.error(f"An error occurred while contacting {e.request.url}: {e}")
             return False
     if r.json()["status"] == "ok":
         x = None
@@ -345,6 +380,8 @@ async def get_internal_api_status():
     return False
 
 
+@cached(cache=TTLCache(maxsize=1, ttl=300))
+@cacheable
 async def get_30d_internal_api_history_ratio():
     async with httpx.AsyncClient() as client:
         try:
@@ -352,7 +389,7 @@ async def get_30d_internal_api_history_ratio():
                 f"https://status.hackvita.eu/api/getMonitorList/MW0n9u5897?page=1&_={timestamp}"
             )
         except httpx.HTTPError as e:
-            logging.error(f"An error occurred while contacting {e.request.url}")
+            logging.error(f"An error occurred while contacting {e.request.url}: {e}")
             return "N/A"
     if r.json()["status"] == "ok":
         x = None
@@ -363,6 +400,8 @@ async def get_30d_internal_api_history_ratio():
         return x["30dRatio"]["ratio"]
 
 
+@cached(cache=TTLCache(maxsize=1, ttl=300))
+@cacheable
 async def get_90d_internal_api_history_ratio():
     async with httpx.AsyncClient() as client:
         try:
@@ -370,7 +409,7 @@ async def get_90d_internal_api_history_ratio():
                 f"https://status.hackvita.eu/api/getMonitorList/MW0n9u5897?page=1&_={timestamp}"
             )
         except httpx.HTTPError as e:
-            logging.error(f"An error occurred while contacting {e.request.url}")
+            logging.error(f"An error occurred while contacting {e.request.url}: {e}")
             return "N/A"
     if r.json()["status"] == "ok":
         x = None
@@ -381,6 +420,8 @@ async def get_90d_internal_api_history_ratio():
         return x["90dRatio"]["ratio"]
 
 
+@cached(cache=TTLCache(maxsize=1, ttl=300))
+@cacheable
 async def get_30d_internal_api_history_label():
     async with httpx.AsyncClient() as client:
         try:
@@ -388,7 +429,7 @@ async def get_30d_internal_api_history_label():
                 f"https://status.hackvita.eu/api/getMonitorList/MW0n9u5897?page=1&_={timestamp}"
             )
         except httpx.HTTPError as e:
-            logging.error(f"An error occurred while contacting {e.request.url}")
+            logging.error(f"An error occurred while contacting {e.request.url}: {e}")
             return False
     if r.json()["status"] == "ok":
         x = None
@@ -402,6 +443,8 @@ async def get_30d_internal_api_history_label():
             return True
 
 
+@cached(cache=TTLCache(maxsize=1, ttl=300))
+@cacheable
 async def get_90d_internal_api_history_label():
     async with httpx.AsyncClient() as client:
         try:
@@ -409,12 +452,122 @@ async def get_90d_internal_api_history_label():
                 f"https://status.hackvita.eu/api/getMonitorList/MW0n9u5897?page=1&_={timestamp}"
             )
         except httpx.HTTPError as e:
-            logging.error(f"An error occurred while contacting {e.request.url}")
+            logging.error(f"An error occurred while contacting {e.request.url}: {e}")
             return False
     if r.json()["status"] == "ok":
         x = None
         for monitor in r.json()["psp"]["monitors"]:
             if monitor["monitorId"] == 787864219:
+                x = monitor
+                break
+        if not x["90dRatio"]["label"] == "success":
+            return False
+        else:
+            return True
+
+
+@cached(cache=TTLCache(maxsize=1, ttl=300))
+@cacheable
+async def get_qr_api_status():
+    async with httpx.AsyncClient() as client:
+        try:
+            r = await client.get(
+                f"https://status.hackvita.eu/api/getMonitorList/MW0n9u5897?page=1&_={timestamp}"
+            )
+        except httpx.HTTPError as e:
+            logging.error(f"An error occurred while contacting {e.request.url}: {e}")
+            return False
+    if r.json()["status"] == "ok":
+        x = None
+        for monitor in r.json()["psp"]["monitors"]:
+            if monitor["monitorId"] == 787920021:
+                x = monitor
+                break
+        if x["statusClass"] == "success":
+            return True
+        else:
+            return False
+    return False
+
+
+@cached(cache=TTLCache(maxsize=1, ttl=300))
+@cacheable
+async def get_30d_qr_api_history_ratio():
+    async with httpx.AsyncClient() as client:
+        try:
+            r = await client.get(
+                f"https://status.hackvita.eu/api/getMonitorList/MW0n9u5897?page=1&_={timestamp}"
+            )
+        except httpx.HTTPError as e:
+            logging.error(f"An error occurred while contacting {e.request.url}: {e}")
+            return "N/A"
+    if r.json()["status"] == "ok":
+        x = None
+        for monitor in r.json()["psp"]["monitors"]:
+            if monitor["monitorId"] == 787920021:
+                x = monitor
+                break
+        return x["30dRatio"]["ratio"]
+
+
+@cached(cache=TTLCache(maxsize=1, ttl=300))
+@cacheable
+async def get_90d_qr_api_history_ratio():
+    async with httpx.AsyncClient() as client:
+        try:
+            r = await client.get(
+                f"https://status.hackvita.eu/api/getMonitorList/MW0n9u5897?page=1&_={timestamp}"
+            )
+        except httpx.HTTPError as e:
+            logging.error(f"An error occurred while contacting {e.request.url}: {e}")
+            return "N/A"
+    if r.json()["status"] == "ok":
+        x = None
+        for monitor in r.json()["psp"]["monitors"]:
+            if monitor["monitorId"] == 787920021:
+                x = monitor
+                break
+        return x["90dRatio"]["ratio"]
+
+
+@cached(cache=TTLCache(maxsize=1, ttl=300))
+@cacheable
+async def get_30d_qr_api_history_label():
+    async with httpx.AsyncClient() as client:
+        try:
+            r = await client.get(
+                f"https://status.hackvita.eu/api/getMonitorList/MW0n9u5897?page=1&_={timestamp}"
+            )
+        except httpx.HTTPError as e:
+            logging.error(f"An error occurred while contacting {e.request.url}: {e}")
+            return False
+    if r.json()["status"] == "ok":
+        x = None
+        for monitor in r.json()["psp"]["monitors"]:
+            if monitor["monitorId"] == 787920021:
+                x = monitor
+                break
+        if not x["30dRatio"]["label"] == "success":
+            return False
+        else:
+            return True
+
+
+@cached(cache=TTLCache(maxsize=1, ttl=300))
+@cacheable
+async def get_90d_qr_api_history_label():
+    async with httpx.AsyncClient() as client:
+        try:
+            r = await client.get(
+                f"https://status.hackvita.eu/api/getMonitorList/MW0n9u5897?page=1&_={timestamp}"
+            )
+        except httpx.HTTPError as e:
+            logging.error(f"An error occurred while contacting {e.request.url}: {e}")
+            return False
+    if r.json()["status"] == "ok":
+        x = None
+        for monitor in r.json()["psp"]["monitors"]:
+            if monitor["monitorId"] == 787920021:
                 x = monitor
                 break
         if not x["90dRatio"]["label"] == "success":

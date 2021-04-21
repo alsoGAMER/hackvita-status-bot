@@ -7,3 +7,4 @@ plate
 httpx
 httpx[http2]
 httpx[brotli]
+cachetools

@@ -80,6 +80,9 @@ async def start_handler(_, update):
                     website_status="Online"
                     if await get_website_status()
                     else "Offline",
+                    qr_code_api_status="Online"
+                    if await get_qr_api_status()
+                    else "Offline",
                     api_status="Online" if await get_api_status() else "Offline",
                     api_docs_status="Online"
                     if await get_api_docs_status()
@@ -115,6 +118,9 @@ async def start_handler(_, update):
                     username=update.from_user.username,
                     website_status="Online"
                     if await get_website_status()
+                    else "Offline",
+                    qr_code_api_status="Online"
+                    if await get_qr_api_status()
                     else "Offline",
                     api_status="Online" if await get_api_status() else "Offline",
                     api_docs_status="Online"
@@ -177,6 +183,10 @@ async def services_status_history_handler(_, query):
             website_30d_avg_symbol="✅"
             if await get_30d_website_history_label()
             else "⚠️",
+            qr_code_api_30d_avg=await get_30d_qr_api_history_ratio(),
+            qr_code_api_30d_avg_symbol="✅"
+            if await get_30d_qr_api_history_ratio()
+            else "⚠️",
             api_30d_avg=await get_30d_api_history_ratio(),
             api_30d_avg_symbol="✅" if await get_30d_api_history_label() else "⚠️",
             docs_30d_avg=await get_30d_api_docs_history_ratio(),
@@ -188,6 +198,10 @@ async def services_status_history_handler(_, query):
             website_90d_avg=await get_90d_website_history_ratio(),
             website_90d_avg_symbol="✅"
             if await get_90d_website_history_label()
+            else "⚠️",
+            qr_code_api_90d_avg=await get_90d_qr_api_history_ratio(),
+            qr_code_api_90d_avg_symbol="✅"
+            if await get_90d_qr_api_history_ratio()
             else "⚠️",
             api_90d_avg=await get_90d_api_history_ratio(),
             api_90d_avg_symbol="✅" if await get_90d_api_history_label() else "⚠️",

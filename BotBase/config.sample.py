@@ -55,7 +55,7 @@ CACHE = defaultdict(lambda: ["none", 0])
 NAME = "tg://user?id={}"
 
 PY_VERSION = platform.python_version()
-BOT_VERSION = "1.0a"
+BOT_VERSION = "1.1a"
 BOTBASE_VERSION = "2.1.1"
 # endregion
 
@@ -77,7 +77,7 @@ API_HASH = ""
 # Same as above
 DEVICE_MODEL = "hackvita-status-bot"
 # Name of the device shown in the sessions list - useless for a Bot
-SYSTEM_VERSION = "1.0.a"
+SYSTEM_VERSION = "1.1a"
 # Host OS version, can be the same as VERSION - also useless for a Bot
 LANG_CODE = "en_US"
 # Session lang_code
